@@ -1,0 +1,48 @@
+<Function>    := <Type> <Identifier> "(" <ArgList> ")" <CompoundStmt>
+<ArgList>     := <Arg>
+              |  <ArgList> "," <Arg>
+<Arg>         := <Type> <Identify> ";"
+<Declaration> := <Type> <IdenList> ";"
+<Type>        := "int" | "float"
+<IdentList>   := <IdenList> "," <Identify>
+<Stmt>        := <ForStmt>
+              |  <WhileStmt>
+              |  <Expr> ";"
+              |  <IfStmt>
+              |  <CompoundStmt>
+              |  <Declaration>
+              | ";"
+<ForStmt>     := "for" "(" <Expr> ";" <OptExpr> ";" <OptExpr>")" <Stmt>
+<OptExpr>     := <Expr> | <e>
+<WhileStmt>   := "while" "(" <Expr> ")" <Stmt>
+<IfStmt>      := "if" "(" <Expr> ")" <Stmt> <ElsePart>
+<ElsePart>    := "else" <Stmt>
+              |  <e>
+<CompoundStmt> := "{" <StmtList> "}"
+<StmtList>     := <StmtList> <Stmt>
+               |  <e>
+<Expr>         := <Identifier> ":=" <Expr>
+               |  <Expr> <LogicOp> <Expr>
+               |  <NotOp> <Expr>
+               |  <Rvalue>
+<LogicOp>      := "&&"
+               |  "||"
+<NotOp>        := "!"
+<Rvalue>       := <Rvalue> <Compare> <Mag>
+               |  <Mag>
+<Compare>      := "=="
+               |  "<"
+               |  ">"
+<Mag>          := <Mag> "+" <Term>
+               |  <Mag> "-" <Term>
+               |  <Term>
+<Term>         := <Term> "*" <Factor>
+               |  <Term> "/" <Factor>
+               |  <Term> "%" <Factor>
+<Factor>       := "(" <Expr> ")"
+               |  "-" <Factor>
+               |  "+" <Factor>
+               |  <Identifier>
+               |  <Number>
+<Number>       := <LitInt>
+               |  <LitFloat>
