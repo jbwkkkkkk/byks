@@ -1,3 +1,5 @@
+//语法变量<e>就是epsilon
+
 <Function>    := <Type> <Identifier> "(" <ArgList> ")" <CompoundStmt>
 <ArgList>     := <Arg>
               |  <ArgList> "," <Arg>
@@ -47,4 +49,3 @@
                |  <Number>
 <Number>       := <LitInt>
                |  <LitFloat>
-               
