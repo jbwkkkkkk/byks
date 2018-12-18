@@ -33,12 +33,13 @@
 <Compare>      := "=="
                |  "<"
                |  ">"
-<Mag>          := <Mag> "+" <Term>
-               |  <Mag> "-" <Term>
+<Mag>          := <Mag> "+" <Mag>
+               |  <Mag> "-" <Mag>
                |  <Term>
-<Term>         := <Term> "*" <Factor>
-               |  <Term> "/" <Factor>
-               |  <Term> "%" <Factor>
+<Term>         := <Term> "*" <Term>
+               |  <Term> "/" <Term>
+               |  <Term> "%" <Term>
+               |  <Factor>
 <Factor>       := "(" <Expr> ")"
                |  "-" <Factor>
                |  "+" <Factor>
@@ -46,3 +47,4 @@
                |  <Number>
 <Number>       := <LitInt>
                |  <LitFloat>
+               
