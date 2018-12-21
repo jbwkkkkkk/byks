@@ -1,51 +1,46 @@
-//语法变量<e>就是epsilon
-
-<Function>    := <Type> <Identifier> "(" <ArgList> ")" <CompoundStmt>
-<ArgList>     := <Arg>
-              |  <ArgList> "," <Arg>
-<Arg>         := <Type> <Identify> ";"
-<Declaration> := <Type> <IdenList> ";"
-<Type>        := "int" | "float"
-<IdentList>   := <IdenList> "," <Identify>
-<Stmt>        := <ForStmt>
-              |  <WhileStmt>
-              |  <Expr> ";"
-              |  <IfStmt>
-              |  <CompoundStmt>
-              |  <Declaration>
-              | ";"
-<ForStmt>     := "for" "(" <Expr> ";" <OptExpr> ";" <OptExpr>")" <Stmt>
-<OptExpr>     := <Expr> | <e>
-<WhileStmt>   := "while" "(" <Expr> ")" <Stmt>
-<IfStmt>      := "if" "(" <Expr> ")" <Stmt> <ElsePart>
-<ElsePart>    := "else" <Stmt>
-              |  <e>
+<Program>      := "int" "main" "(" ")" <CompoundStmt>
 <CompoundStmt> := "{" <StmtList> "}"
-<StmtList>     := <StmtList> <Stmt>
-               |  <e>
-<Expr>         := <Identifier> ":=" <Expr>
-               |  <Expr> <LogicOp> <Expr>
+<StmtList>     := <Stmt> <StmtList>
+               |  "<e>"
+<Stmt>         := <WhileStmt>
+	       |  <IfStmt>
+               |  <CompoundStmt>
+               |  <Declaration>
+               |  <Expr> ";"
+               | ";"
+<WhileStmt>    := "while" "(" <Expr> ")" <Stmt>
+<IfStmt>       := "if" "(" <Expr> ")" <Stmt> <ElsePart>
+<ElsePart>     := "else" <Stmt>
+               |  "<e>"
+<Declaration>  := <Type> <IdentList> ";"
+<Type>         := "int"
+               |  "float"
+<IdentList>    := "Identifier" "," <IdentList>
+<Expr>	       := <ExprNLR> <LogicOp> <Expr>
+	       |  <ExprNLR>
+<ExprNLR>      := "Identifier" ":=" <Expr>
                |  <NotOp> <Expr>
                |  <Rvalue>
 <LogicOp>      := "&&"
                |  "||"
 <NotOp>        := "!"
-<Rvalue>       := <Rvalue> <Compare> <Mag>
-               |  <Mag>
+<Rvalue>       := <Mag> <Compare> <Mag>
+	       |  <Mag>	
 <Compare>      := "=="
                |  "<"
                |  ">"
-<Mag>          := <Mag> "+" <Mag>
-               |  <Mag> "-" <Mag>
-               |  <Term>
-<Term>         := <Term> "*" <Term>
-               |  <Term> "/" <Term>
-               |  <Term> "%" <Term>
-               |  <Factor>
+<Mag>          := <Term> <Mag1>
+<Mag1>         := "+" <Term> <Mag1>
+               |  "-" <Term> <Mag1>
+               |  "<e>"
+<Term>         := <Factor> <Term1>
+<Term1>        := "*" <Factor> <Term1>
+               |  "/" <Factor> <Term1>
+               |  "<e>"
 <Factor>       := "(" <Expr> ")"
-               |  "-" <Factor>
-               |  "+" <Factor>
-               |  <Identifier>
+               |  "Identifier"
                |  <Number>
-<Number>       := <LitInt>
-               |  <LitFloat>
+<Number>       := "LitInt"
+               |  "-" "LitInt"
+               |  "LitFloat"
+               |  "-" "LitFloat"

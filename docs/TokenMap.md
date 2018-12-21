@@ -1,6 +1,6 @@
-0  float_lit
+0  double_lit
 1  int_lit
-2  float
+2  double
 3  int
 4  identify
 5  if
