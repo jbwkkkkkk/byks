@@ -2,30 +2,30 @@
 <CompoundStmt> := "{" <StmtList> "}"
 <StmtList>     := <Stmt> <StmtList>
                |  "<e>"
-<Stmt>         := <WhileStmt>
-	       |  <IfStmt>
-               |  <CompoundStmt>
-               |  <Declaration>
-               |  <Expr> ";"
-               | ";"
+<Stmt>	       := <MatchedStmt>
+	           |  <OpenStmt>
+<MatchedStmt>  := "if" "(" <Expr> ")" <MatchedStmt> "else" <MatchedStmt>
+	           |  <Whi5leStmt>
+	           |  <CompoundStmt>
+	           |  <Declaration>
+	           |  <Expr> ";"
+	           |  ";"
+<OpenStmt>     := "if" "(" <Expr> ")" <Stmt>
+	           |  "if" "(" <Expr> ")" <MatchedStmt> "else" <OpenStmt>
 <WhileStmt>    := "while" "(" <Expr> ")" <Stmt>
-<IfStmt>       := "if" "(" <Expr> ")" <Stmt> <ElsePart>
-<ElsePart>     := "else" <Stmt>
-               |  "<e>"
 <Declaration>  := <Type> <IdentList> ";"
 <Type>         := "int"
                |  "float"
 <IdentList>    := "Identifier" "," <IdentList>
-<Expr>	       := <ExprNLR> <LogicOp> <Expr>
-	       |  <ExprNLR>
-<ExprNLR>      := "Identifier" ":=" <Expr>
-               |  <NotOp> <Expr>
-               |  <Rvalue>
-<LogicOp>      := "&&"
-               |  "||"
-<NotOp>        := "!"
-<Rvalue>       := <Mag> <Compare> <Mag>
-	       |  <Mag>	
+<Expr>	       := "(" <Factor> ")" <Term1> <Mag1> <Rvalue1>
+	           |  <Number> <Term1> <Mag1> <Rvalue1>
+	           |  "!" <Expr>
+	           |  "Identifier" <ExprNLR1>
+<ExprNLR1>     := ":=" <Expr>
+	           |  <Term1> <Mag1> <Rvalue1>
+<Rvalue>       := <Mag> <Rvalue1>
+<Rvalue1>      := <Compare> <Mag>
+	           |  "<e>"
 <Compare>      := "=="
                |  "<"
                |  ">"
@@ -40,7 +40,5 @@
 <Factor>       := "(" <Expr> ")"
                |  "Identifier"
                |  <Number>
-<Number>       := "LitInt"
-               |  "-" "LitInt"
-               |  "LitFloat"
-               |  "-" "LitFloat"
+<Number>       := "IntLit"
+               |  "FloatLit"
