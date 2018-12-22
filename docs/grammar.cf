@@ -1,44 +1,18 @@
-<Program>      := "int" "main" "(" ")" <CompoundStmt>
-<CompoundStmt> := "{" <StmtList> "}"
-<StmtList>     := <Stmt> <StmtList>
-               |  "<e>"
-<Stmt>	       := <MatchedStmt>
-	           |  <OpenStmt>
-<MatchedStmt>  := "if" "(" <Expr> ")" <MatchedStmt> "else" <MatchedStmt>
-	           |  <Whi5leStmt>
-	           |  <CompoundStmt>
-	           |  <Declaration>
-	           |  <Expr> ";"
-	           |  ";"
-<OpenStmt>     := "if" "(" <Expr> ")" <Stmt>
-	           |  "if" "(" <Expr> ")" <MatchedStmt> "else" <OpenStmt>
-<WhileStmt>    := "while" "(" <Expr> ")" <Stmt>
-<Declaration>  := <Type> <IdentList> ";"
-<Type>         := "int"
-               |  "float"
-<IdentList>    := "Identifier" "," <IdentList>
-<Expr>	       := "(" <Factor> ")" <Term1> <Mag1> <Rvalue1>
-	           |  <Number> <Term1> <Mag1> <Rvalue1>
-	           |  "!" <Expr>
-	           |  "Identifier" <ExprNLR1>
-<ExprNLR1>     := ":=" <Expr>
-	           |  <Term1> <Mag1> <Rvalue1>
-<Rvalue>       := <Mag> <Rvalue1>
-<Rvalue1>      := <Compare> <Mag>
-	           |  "<e>"
-<Compare>      := "=="
-               |  "<"
-               |  ">"
-<Mag>          := <Term> <Mag1>
-<Mag1>         := "+" <Term> <Mag1>
-               |  "-" <Term> <Mag1>
-               |  "<e>"
-<Term>         := <Factor> <Term1>
-<Term1>        := "*" <Factor> <Term1>
-               |  "/" <Factor> <Term1>
-               |  "<e>"
-<Factor>       := "(" <Expr> ")"
-               |  "Identifier"
-               |  <Number>
-<Number>       := "IntLit"
-               |  "FloatLit"
+<Program>      := "int" "main" "(" ")" <Block>
+<Block>        := "{" <Decls> <Stmts> "}"
+<Decls>        := <Type> <ID> ";"
+<Stmts>        := <Stmt> <Stmts>
+<Type>         := "int" | "float"
+<Stmt>         := ";" | <If> | <While> | <Block> | <Assign>
+<If>           := "if" "(" <BoolExpr> ")" <Stmt> <Else>
+<While>        := "while" "(" <BoolExpr> ")" <Stmt>
+<Assign>       := <ID> "=" <ArthExpr>
+<BoolExpr>     := "!" "(" <BoolExpr> ")" | <ArthExpr> <Compare> <ArthExpr>
+<Else>         := "else" <Stmt>
+<ArthExpr>     := <Term> <Op1> <ArthExpr> | <Term>
+<Compare>      := ">" | "<" | "=="
+<Term>         := <Unary> <Op2> <Term> | <Unary>
+<Op1>          := "+" | "-"
+<Unary>        := "-" <Factor> | <Factor>
+<Op2>          := "*" | "/"
+<Factor>       := "(" <ArthExpr> ")" | <ID> | <NumInt> | <NumFloat>
